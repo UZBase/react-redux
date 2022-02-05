@@ -15,8 +15,9 @@ export function fetchQuizes(){
             })
 
             dispatch(fetchQuizesSuccess(quizes))
-        } catch (error) {
-            console.log(error);
+        } catch (e) {
+            dispatch(fetchQuizesError(e))
+            console.log(e);
         }
     }
 }
@@ -32,6 +33,7 @@ export function fetchQuizesSuccess(quizes) {
         quizes
     }
 }
-export function fetchError(e) {return {
-    type:FETCH_QUIZES_ERROR
+export function fetchQuizesError(e) {return {
+    type:FETCH_QUIZES_ERROR,
+    error:e
 }}

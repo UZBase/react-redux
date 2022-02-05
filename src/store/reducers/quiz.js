@@ -2,7 +2,7 @@ import { FETCH_QUIZES_START,FETCH_QUIZES_SUCCESS,FETCH_QUIZES_ERROR } from "../a
 
 const initialStore = {
     quizes: [],
-    loading: true
+    loading: false
 }
 
 export default function quizReducer(state = initialStore,action){
