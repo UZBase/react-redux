@@ -4,7 +4,7 @@ import classes from './QuizList.module.css'
 import Loader from '../../components/UI/Loader/Loader';
 // import { connect } from 'mongoose';
 import { connect } from 'react-redux';
-import fetchQuizes from '../../store/actions/quiz'
+import {fetchQuizes} from '../../store/actions/quiz'
 
  class QuizList extends Component {
     renderQuizes() {
