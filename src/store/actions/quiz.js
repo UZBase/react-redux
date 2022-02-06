@@ -1,9 +1,16 @@
 import axios from "../../axios/axios-quiz"
-import { FETCH_QUIZES_START,FETCH_QUIZES_SUCCESS,FETCH_QUIZES_ERROR } from "../actions/actionType"
+import { FETCH_QUIZES_START, FETCH_QUIZES_SUCCESS, FETCH_QUIZES_ERROR, FETCH_QUIZ_SUCCESS } from "../actions/actionType"
 
-export function fetchQuizes(){
-    return async dispatch =>{
-                try {
+// const initialStore = {
+//     results: {},
+//     isFinished: false,
+//     activeQuestion: 0,
+//     answerState: null,  //{[id]: 'success' 'error'}
+//     quiz: null
+// }
+export function fetchQuizes() {
+    return async dispatch => {
+        try {
             const res = await axios.get('/quizes.json')
 
             const quizes = []
@@ -14,26 +21,43 @@ export function fetchQuizes(){
                 })
             })
 
-            dispatch(fetchQuizesSuccess(quizes))
+            dispatch(fetchQuizSuccess(quizes))
         } catch (e) {
             dispatch(fetchQuizesError(e))
             console.log(e);
         }
     }
 }
+export function fetchQuizById(quizId) {
+    return async dispatch => {
+        dispatch(fetchQuizesStart())
 
-export function fetchQuizesStart(){
+        try {
+            const res = await axios.get(`/quizes/${quizId}.json`)
+            const quiz = res.data
+            dispatch(fetchQuizSuccess(quiz))
+        } catch (error) {
+            dispatch(fetchQuizesError(error))
+        }
+    }
+}
+export function fetchQuizSuccess(quiz) {
+    return { type: FETCH_QUIZ_SUCCESS, quiz }
+}
+export function fetchQuizesStart() {
     return {
-        type:FETCH_QUIZES_START
+        type: FETCH_QUIZES_START
     }
 }
 export function fetchQuizesSuccess(quizes) {
     return {
-        type:FETCH_QUIZES_SUCCESS,
+        type: FETCH_QUIZES_SUCCESS,
         quizes
     }
 }
-export function fetchQuizesError(e) {return {
-    type:FETCH_QUIZES_ERROR,
-    error:e
-}}
+export function fetchQuizesError(e) {
+    return {
+        type: FETCH_QUIZES_ERROR,
+        error: e
+    }
+}
