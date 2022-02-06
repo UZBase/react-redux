@@ -1,6 +1,6 @@
 import axios from "../../axios/axios-quiz"
 import { FETCH_QUIZES_START, FETCH_QUIZES_SUCCESS, FETCH_QUIZES_ERROR, FETCH_QUIZ_SUCCESS,QUIZ_SET_STATE,FINISH_QUIZ ,QUIZ_NEXT_QUESTION} from "../actions/actionType"
-import {isQuizFinished} from '../../store/actions/quiz'
+
 const initialStore = {
     results: {},
     isFinished: false,
@@ -90,7 +90,7 @@ export function quizAnswerClick(answerId) {
             }
             dispatch(quizSetState({ [answerId]: 'success' },results))
             const timeout = window.setTimeout(() => {
-                if (finishQuiz()) {
+                if (isQuizFinished()) {
                     dispatch(finishQuiz())
                 } else {
                     // this.setState({
@@ -114,6 +114,7 @@ export function quizAnswerClick(answerId) {
       
     }
 }
+// function isQuizFinished(state)
 // function qu
 export function quizSetState(answerState,results){
     return{
